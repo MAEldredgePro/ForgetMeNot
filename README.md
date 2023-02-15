@@ -17,6 +17,11 @@ Create a To Do app which allows users to create multiple lists of tasks, edit, d
  - [ ] User must be able to customize task list view.
  - [ ] App must be intuitive and easy to use.
 
+### Old (Stretch?) Requirements:
+ - [ ] Removed: App must be secure and user data must be protected.
+ - [ ] Removed: App must be compatible with multiple devices.
+ - [ ] Removed: User must be able to share task lists with others.
+
 ### Deliverables:
  - [ ] An app that meets the requirements stated above.
  - [ ] Screenshots of the app.
