@@ -34,15 +34,19 @@ function loadAppState() {
 }
 
 function deleteAllLists() {
-  testString = null;
+  todoListTable = null;
   saveAppState();
   loadAppState();
   renderHTML();
 }
 
+function clearPage() {
+  document.querySelector('body').innerHTML = '';
+}
+
 function renderHTML(isDirty = DIRTY) {
   // clear the current HTML
-  document.querySelector('body').innerHTML = '';
+  clearPage();
 
   // Create the 'Delete All Lists' button
   let elButton = document.createElement('button');
@@ -60,16 +64,24 @@ function renderHTML(isDirty = DIRTY) {
   document.body.appendChild(elInputAddList);
   elInputAddList.focus();
 
-  // Add the app data
-  todoListTable.forEach(todoList => {
+  // Add the todo list table data
+  todoListTable.forEach((todoList, index) => {
     elButton = document.createElement('button');
     elButton.innerHTML = todoList;
+    elButton.addEventListener('click', function () {
+      open(`list.html?id=${index}`, '_self');
+    });
     document.body.appendChild(elButton);
   }
   );
 
   // Save the app state if we are dirty.
   isDirty ? saveAppState() : null;
+}
+
+function renderListPage(listId, listName) {
+  clearPage();
+  document.body.innerHTML += listName;
 }
 
 function saveAppState() {
@@ -83,6 +95,14 @@ function saveAppState() {
   localStorage.setItem(MASTER_LIST_STORAGE_KEY, JSON.stringify(todoListTable));
 }
 
+function addNewList(listName) {
+  // Add the new list to the global list of lists.
+  todoListTable.push(listName);
+
+  // Re-render the HTML
+  renderHTML();
+}
+
 function handleAddListKeypress(event) {
   if ('Enter' !== event.key) return;
 
@@ -92,10 +112,7 @@ function handleAddListKeypress(event) {
   addNewList(elInputAddList.value);
 }
 
-function addNewList(listName) {
-  // Add the new list to the global list of lists.
-  todoListTable.push(listName);
-
-  // Re-render the HTML
-  renderHTML();
-}
+// function handleListButtonClick(event) {
+//   renderListPage(event.target.id, event.target.innerHTML);
+//   // console.log(event);
+// }
