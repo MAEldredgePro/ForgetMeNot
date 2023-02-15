@@ -9,9 +9,12 @@ const DELETE_ALL_LISTS = 'Delete All Lists';
 const DIRTY = true;
 const NOT_DIRTY = false;
 
+// debug code
+// localStorage.removeItem(MASTER_LIST_STORAGE_KEY);
+
 // Global variables
-let testString = 'testString was declared and initialized';
-let toDoListTable = null;
+// let testString = 'testString was declared and initialized';
+let todoListTable = null;
 
 // Code called when the script loads - similar to other languages' main()
 document.addEventListener('DOMContentLoaded', function () {
@@ -23,10 +26,11 @@ document.addEventListener('DOMContentLoaded', function () {
 // Function definitions //
 //////////////////////////
 function loadAppState() {
-  testString = localStorage.getItem(MASTER_LIST_STORAGE_KEY) ||
-    'local storage data not found';
+  // load the table from local storage
+  todoListTable = JSON.parse(localStorage.getItem(MASTER_LIST_STORAGE_KEY));
 
-  // toDoListTable = JSON.parse(localStorage.getItem("listTable")) || [];
+  // make sure we have at least an empty table (local storage might be empty).
+  todoListTable = todoListTable || [];
 }
 
 function deleteAllLists() {
@@ -57,9 +61,12 @@ function renderHTML(isDirty = DIRTY) {
   elInputAddList.focus();
 
   // Add the app data
-  elButton = document.createElement('button');
-  elButton.innerHTML = testString;
-  document.body.appendChild(elButton);
+  todoListTable.forEach(todoList => {
+    elButton = document.createElement('button');
+    elButton.innerHTML = todoList;
+    document.body.appendChild(elButton);
+  }
+  );
 
   // Save the app state if we are dirty.
   isDirty ? saveAppState() : null;
@@ -68,11 +75,12 @@ function renderHTML(isDirty = DIRTY) {
 function saveAppState() {
   // Save the state of the app so that it will come up the same if the app
   //  is shut down and re-loaded.
-
-  // localStorage.setItem(MASTER_LIST_STORAGE_KEY, JSON.stringify(toDoListTable));
-  (testString !== null) ?
-    localStorage.setItem(MASTER_LIST_STORAGE_KEY, testString) :
+  if (todoListTable === null) {
     localStorage.removeItem(MASTER_LIST_STORAGE_KEY);
+    return;
+  }
+
+  localStorage.setItem(MASTER_LIST_STORAGE_KEY, JSON.stringify(todoListTable));
 }
 
 function handleAddListKeypress(event) {
@@ -86,8 +94,7 @@ function handleAddListKeypress(event) {
 
 function addNewList(listName) {
   // Add the new list to the global list of lists.
-  //toDoListTable.push(listName);
-  testString = listName;
+  todoListTable.push(listName);
 
   // Re-render the HTML
   renderHTML();

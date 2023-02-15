@@ -6,7 +6,8 @@
 Create a To Do app which allows users to create multiple lists of tasks, edit, delete, mark, and clear tasks when they are complete.
 
 ### Requirements:
- - [ ] User must be able to create multiple lists of tasks.
+ - [x] User must be able to create multiple lists
+ - [ ] - of tasks.
  - [ ] User must be able to edit, delete, and mark tasks.
  - [ ] User must be able to clear tasks when they are complete.
  - [ ] User must be able to view all tasks in a list.
