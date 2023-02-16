@@ -45,14 +45,10 @@ function clearPage() {
 }
 
 function renderHTML(isDirty = DIRTY) {
+  let elButton = null;
+
   // clear the current HTML
   clearPage();
-
-  // Create the 'Delete All Lists' button
-  let elButton = document.createElement('button');
-  elButton.innerHTML = DELETE_ALL_LISTS;
-  elButton.addEventListener('click', deleteAllLists);
-  document.body.appendChild(elButton);
 
   // Create the 'Add List' input element.
   var elInputAddList = document.createElement('input');
@@ -64,14 +60,28 @@ function renderHTML(isDirty = DIRTY) {
   document.body.appendChild(elInputAddList);
   elInputAddList.focus();
 
+  // Create the 'Delete All Lists' button
+  elButton = document.createElement('button');
+  elButton.innerHTML = DELETE_ALL_LISTS;
+  elButton.addEventListener('click', deleteAllLists);
+  document.body.appendChild(elButton);
+
+  // add a line break
+  document.body.appendChild(document.createElement('br'));
+
   // Add the todo list table data
   todoListTable.forEach((todoList, index) => {
+
+    // create the task list
     elButton = document.createElement('button');
     elButton.innerHTML = todoList;
+
+    // Add event listener for user interaction
     elButton.addEventListener('click', function () {
       open(`list.html?id=${index}`, '_self');
     });
     document.body.appendChild(elButton);
+    document.body.appendChild(document.createElement('br'));
   }
   );
 

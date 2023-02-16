@@ -17,12 +17,11 @@ Create a ToDo app which allows users to create multiple task lists, and edit, de
  - [x] User must be able to view all tasks in a list.
  - [x] User must be able to save tasks for later viewing.
  - [x] User must be able to delete tasks from list.
- - User must be able to mark tasks as completed.
-   - Some state information for each task must be stored.
+ - [x] User must be able to mark tasks as completed.
+   - [x] Some state information for each task must be stored.
+ - [ ] User must be able to delete (hide?) completed tasks with one click.
  - [ ] User must be able to edit tasks
    - What does this mean? Able to change task name?
- - [ ] User must be able to clear tasks when they are complete.
-   - [ ] ***Need to clarify this requirement***
  - [ ] User must be able to search for specific tasks in the list.
    - one list at a time?
    - across all lists?
@@ -41,4 +40,4 @@ Create a ToDo app which allows users to create multiple task lists, and edit, de
  - [ ] An app that meets the requirements stated above.
  - [ ] Screenshots of the app.
  - [ ] Documentation of the code and app features.
- - [ ] Must be written in JavaScript.
+ - [x] Must be written in JavaScript.

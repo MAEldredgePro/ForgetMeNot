@@ -16,11 +16,10 @@ const params = new Proxy(new URLSearchParams(window.location.search), {
 });
 
 const listId = params.id;
+var loopCount = 0;
 
-document.addEventListener('DOMContentLoaded', function () {
-  loadTaskList();
-  renderHTML(NOT_DIRTY);
-});
+loadTaskList();
+renderHTML(NOT_DIRTY);
 
 //////////////////////////
 // Function definitions //
@@ -34,7 +33,7 @@ function loadTaskList() {
   taskList = taskList || [];
 }
 
-function clearPage(isDirty) {
+function clearPage() {
   document.querySelector('body').innerHTML = '';
 }
 
@@ -50,34 +49,26 @@ function renderHTML(isDirty) {
   //  will handle the 'Enter' key, creating and adding a new task.
   elInputAddTask.addEventListener('keypress', handleAddTaskKeypress);
   document.body.appendChild(elInputAddTask);
+  document.body.appendChild(document.createElement('br'));
   elInputAddTask.focus();
 
-  // Add the tasks to the task list
+  // Add the tasks to the task list in the DOM for display
   taskList.forEach((task, index) => {
+
+    // create the task
     elButton = document.createElement('button');
-    elButton.innerHTML = task;
-    // elButton.addEventListener('keypress', handleTaskKeypress)
-    elButton.addEventListener('keyup', function (event) {
-      // console.log(`${index}: ${event.key}`);
-      switch (event.key) {
-        case 'Delete':
-        case 'Backspace':
-        case 'd':
-        case 'D':
-          break;
+    elButton.innerHTML = task.name;
+    elButton.setAttribute('id', index);
+    task.completed ? elButton.setAttribute('class', 'completed') : null;
 
-        default:
-          return;
-      }
+    // add event listeners to the task for user interaction
+    elButton.addEventListener('keyup', handleTaskKeypress);
+    elButton.addEventListener('click', handleTaskClicked);
 
-      // alert(`Deleting element ${index}`);
-      taskList.splice(index, 1);
-      renderHTML(IS_DIRTY);
-    });
-
+    // add the task to the DOM
     document.body.appendChild(elButton);
-  }
-  );
+    document.body.appendChild(document.createElement('br'));
+  });
 
   // Save the task list if we are dirty.
   isDirty ? saveTaskList() : null;
@@ -96,7 +87,8 @@ function saveTaskList() {
 
 function addNewTask(taskName) {
   // Add the new task to the global list of tasks.
-  taskList.push(taskName);
+  const newTask = { "name": taskName, "completed": false };
+  taskList.push(newTask);
 
   // Re-render the HTML
   renderHTML(IS_DIRTY);
@@ -107,18 +99,37 @@ function handleAddTaskKeypress(event) {
 
   // Get the name of the new list and add it to the table of lists
   const elInputTask = document.querySelector('input');
-  console.log(elInputTask.value);
+  // console.log(elInputTask.value);
   addNewTask(elInputTask.value);
 }
 
 function handleTaskKeypress(event) {
-  console.log(event.key);
-  return;
+  const index = event.target.id;
 
-  // if ('Enter' !== event.key) return;
+  switch (event.key) {
+    case 'Delete':
+    case 'Backspace':
+    case 'd':
+    case 'D':
+      deleteTask(index);
+      break;
 
-  // // Get the name of the new list and add it to the table of lists
-  // const elInputTask = document.querySelector('input');
-  // console.log(elInputTask.value);
-  // addNewTask(elInputTask.value);
+    case 'Return':
+      toggleCompleted(index);
+  }
+}
+
+function handleTaskClicked(event) {
+  toggleCompleted(event.target.id);
+}
+
+function deleteTask(index) {
+  // alert(`Deleting element ${index}`);
+  taskList.splice(index, 1);
+  renderHTML(IS_DIRTY);
+}
+
+function toggleCompleted(index) {
+  taskList[index].completed = !taskList[index].completed;
+  renderHTML(IS_DIRTY);
 }
