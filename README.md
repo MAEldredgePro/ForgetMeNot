@@ -1,22 +1,36 @@
-# ForgetMeNot
-#### A persistent ToDo list
-#### [JavaScript project 2.P.1 Step-by-step guide](https://mtec.instructure.com/courses/794448/pages/2-dot-p-1-%7C-todo-app-step-by-step-guide?module_item_id=17368524)
+# ForgetMeNot - A Persistent ToDo List
+## MTECH Web Programming And Development Course
+JavaScript Section
+Project 2.P.1
 
-### Project Overview
-Create a To Do app which allows users to create multiple lists of tasks, edit, delete, mark, and clear tasks when they are complete.
+---
+
+## Project Overview:
+Create a ToDo app which allows users to create multiple task lists, and edit, delete, mark, and clear them when they are complete.
+*peruse the [Step-by-step guide](https://mtec.instructure.com/courses/794448/pages/2-dot-p-1-%7C-todo-app-step-by-step-guide?module_item_id=17368524)*
+
+---
 
 ### Requirements:
- - [x] User must be able to create multiple lists
- - [ ] - of tasks.
- - [ ] User must be able to edit, delete, and mark tasks.
- - [ ] User must be able to clear tasks when they are complete.
- - [ ] User must be able to view all tasks in a list.
- - [ ] User must be able to search for specific tasks in the list.
- - [ ] User must be able to save tasks for later viewing.
- - [ ] User must be able to mark tasks as completed.
+ - [x] User must be able to create multiple lists...
+   - [x] of tasks.
+ - [x] User must be able to view all tasks in a list.
+ - [x] User must be able to save tasks for later viewing.
+ - [ ] User must be able to edit tasks
+   - What does this mean? Able to change task name?
  - [ ] User must be able to delete tasks from list.
+ - [ ] User must be able to mark tasks as completed.
+   - Some state information for each task must be stored.
+ - [ ] User must be able to clear tasks when they are complete.
+   - [ ] ***Need to clarify this requirement***
+ - [ ] User must be able to search for specific tasks in the list.
+   - one list at a time?
+   - across all lists?
+   - search for lists by list name?
  - [ ] User must be able to customize task list view.
+   - what does this mean?
  - [ ] App must be intuitive and easy to use.
+   - is this even quantifiable?
 
 ### Old (Stretch?) Requirements:
  - [ ] Removed: App must be secure and user data must be protected.
