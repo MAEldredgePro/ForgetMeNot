@@ -1,11 +1,12 @@
-# ForgetMeNot - A Persistent ToDo List
-## MTECH Web Programming And Development Course
-JavaScript Section
-Project 2.P.1
+# <p style="text-align: center;">ForgetMeNot - A Persistent ToDo List</p>
+---
+## MTECH Web Programming And Development Course (JavaScript Section)
+### Version 2
+###### Assignment 2.P.1
 
 ---
 
-## Project Overview:
+## Project Overview
 Create a ToDo app which allows users to create multiple task lists, and edit, delete, mark, and clear them when they are complete.
 *peruse the [Step-by-step guide](https://mtec.instructure.com/courses/794448/pages/2-dot-p-1-%7C-todo-app-step-by-step-guide?module_item_id=17368524)*
 
