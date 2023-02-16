@@ -1,4 +1,4 @@
-# <p style="text-align: center;">ForgetMeNot - A Persistent ToDo List</p>
+# ForgetMeNot - A Persistent ToDo List
 ---
 ## MTECH Web Programming And Development Course (JavaScript Section)
 ### Version 2
