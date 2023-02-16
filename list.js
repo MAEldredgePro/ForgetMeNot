@@ -4,7 +4,7 @@
 
 // Global constants //
 const NEW_TASK_PROMPT = 'Add task <name + Enter>';
-const DIRTY = true;
+const IS_DIRTY = true;
 const NOT_DIRTY = false;
 
 // Global variables
@@ -56,10 +56,25 @@ function renderHTML(isDirty) {
   taskList.forEach((task, index) => {
     elButton = document.createElement('button');
     elButton.innerHTML = task;
-    elButton.addEventListener('click', function () {
-      console.log(index);
-      //    open(`list.html?id=${index}`, '_self');
+    // elButton.addEventListener('keypress', handleTaskKeypress)
+    elButton.addEventListener('keyup', function (event) {
+      // console.log(`${index}: ${event.key}`);
+      switch (event.key) {
+        case 'Delete':
+        case 'Backspace':
+        case 'd':
+        case 'D':
+          break;
+
+        default:
+          return;
+      }
+
+      // alert(`Deleting element ${index}`);
+      taskList.splice(index, 1);
+      renderHTML(IS_DIRTY);
     });
+
     document.body.appendChild(elButton);
   }
   );
@@ -84,7 +99,7 @@ function addNewTask(taskName) {
   taskList.push(taskName);
 
   // Re-render the HTML
-  renderHTML(DIRTY);
+  renderHTML(IS_DIRTY);
 }
 
 function handleAddTaskKeypress(event) {
@@ -94,4 +109,16 @@ function handleAddTaskKeypress(event) {
   const elInputTask = document.querySelector('input');
   console.log(elInputTask.value);
   addNewTask(elInputTask.value);
+}
+
+function handleTaskKeypress(event) {
+  console.log(event.key);
+  return;
+
+  // if ('Enter' !== event.key) return;
+
+  // // Get the name of the new list and add it to the table of lists
+  // const elInputTask = document.querySelector('input');
+  // console.log(elInputTask.value);
+  // addNewTask(elInputTask.value);
 }
