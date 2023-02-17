@@ -83,7 +83,7 @@ function addUIToPage_TaskListTable() {
 
     // Add event listener for user interaction
     elButton.addEventListener('click', function () {
-      open(`list.html?id=${index}`, '_self');
+      open(`task-list.html?id=${index}`, '_self');
     });
     document.body.appendChild(elButton);
     document.body.appendChild(document.createElement('br'));
