@@ -72,7 +72,7 @@ function addUIToPage_ClearCompletedTasks() {
   elButton = document.createElement('button');
   elButton.innerHTML = CLEAR_COMPLETED_TASKS_PROMPT;
   document.body.appendChild(elButton);
-  
+
   // TODO:
   // Add event listeners that make the button work.
   // elButton.addEventListener('keypress', handleKeypressClearCompleted);
@@ -117,7 +117,7 @@ function saveTaskList() {
   localStorage.setItem(listId, JSON.stringify(taskList));
 }
 
-function addNewTaskItem(taskItemName) {
+function addTaskItem(taskItemName) {
   // Add the new task item to the list of tasks.
   const newTaskItem = { "name": taskItemName, "completed": false };
   taskList.push(newTaskItem);
@@ -131,7 +131,7 @@ function handleKeypressAddTask(event) {
 
   // Get the name of the new list and add it to the table of lists
   const elInputAddTask = document.querySelector('input');
-  addNewTaskItem(elInputAddTask.value);
+  addTaskItem(elInputAddTask.value);
 }
 
 function handleKeypressTaskItem(event) {
