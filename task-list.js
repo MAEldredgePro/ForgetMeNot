@@ -46,7 +46,7 @@ function renderPage(isDirty) {
   addUIToPage_AddTask();
 
   // Add the UI for clearing completed tasks.
-  addUIToPage_ClearCompletedTasks()
+  addUIToPage_ClearCompletedTasks();
 
   // Add a line break.
   document.body.appendChild(document.createElement('br'));
@@ -76,7 +76,7 @@ function addUIToPage_ClearCompletedTasks() {
   // TODO:
   // Add event listeners that make the button work.
   // elButton.addEventListener('keypress', handleKeypressClearCompleted);
-  // elButton.addEventListener('click', handleClickClearCompleted);
+  elButton.addEventListener('click', handleClickClearCompleted);
 }
 
 function addUIToPage_TaskList() {
@@ -115,6 +115,24 @@ function saveTaskList() {
   }
 
   localStorage.setItem(listId, JSON.stringify(taskList));
+}
+
+function removeAllCompletedTasks() {
+  // Copy the contents of the live task list then empty the live task list.
+  let tasks = taskList.splice(0, taskList.length);
+
+  // Iterate all the saved tasks and push the incomplete ones back on to the
+  //  live task list.
+  tasks.forEach(function (task) {
+    !task.completed ? taskList.push(task) : null;
+  });
+
+  // Re-render the HTML
+  renderPage(IS_DIRTY);
+}
+
+function handleClickClearCompleted() {
+  removeAllCompletedTasks();
 }
 
 function addTaskItem(taskItemName) {

@@ -20,9 +20,10 @@ Create a ToDo app which allows users to create multiple task lists, and edit, de
  - [x] User must be able to delete tasks from list.
  - [x] User must be able to mark tasks as completed.
    - [x] Some state information for each task must be stored.
- - ***User must be able to delete (hide?) ALL completed tasks with one click.***
- - [ ] User must be able to edit tasks
+ - [x] User must be able to delete (hide?) ALL completed tasks with one click.
+ - User must be able to edit tasks
    - What does this mean? Able to change task name?
+ - [ ] How about reorder the list?
  - [ ] User must be able to search for specific tasks in the list.
    - one list at a time?
    - across all lists?
