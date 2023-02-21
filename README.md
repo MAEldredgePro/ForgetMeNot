@@ -12,7 +12,11 @@ Create a ToDo app which allows users to create multiple task lists, and edit, de
 
 ---
 
-### Requirements:
+## Current Work In Progress:
+ - From 'Things I'd like to do'
+ - [ ] ***Restructure JavaScipt using ES6 Modules***
+
+## Requirements:
  - [x] User must be able to create multiple lists...
    - [x] of tasks.
  - [x] User must be able to view all tasks in a list.
@@ -37,17 +41,20 @@ Create a ToDo app which allows users to create multiple task lists, and edit, de
    - Does this mean the UI must look/feel like the screenshots
      - posted on slack? (single-screen UI)
 
-### Things I'd like to do
- - [ ] Move completed tasks below incomplete tasks
- - [x] Clear local storage with ```localstorage.clear();```
-
-### Old (Stretch?) Requirements:
- - [ ] Removed: App must be secure and user data must be protected.
- - [ ] Removed: App must be compatible with multiple devices.
- - [ ] Removed: User must be able to share task lists with others.
-
-### Deliverables:
+## Deliverables:
  - [ ] An app that meets the requirements stated above.
  - [ ] Screenshots of the app.
  - [ ] Documentation of the code and app features.
  - [x] Must be written in JavaScript.
+
+---
+
+## Things I'd like to do
+ - [ ] Move completed tasks below incomplete tasks
+ - [x] Clear local storage with ```localstorage.clear();```
+ - [ ] ***Restructure JavaScipt using ES6 Modules***
+
+## Old (Stretch?) Requirements:
+ - [ ] Removed: App must be secure and user data must be protected.
+ - [ ] Removed: App must be compatible with multiple devices.
+ - [ ] Removed: User must be able to share task lists with others.
