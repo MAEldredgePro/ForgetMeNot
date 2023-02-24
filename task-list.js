@@ -156,6 +156,9 @@ function handleKeypressTaskItem(event) {
   const index = event.target.id;
 
   switch (event.key) {
+    case 'Tab':
+      break;
+
     case 'Delete':
     case 'Backspace':
     case 'd':
@@ -165,6 +168,9 @@ function handleKeypressTaskItem(event) {
 
     case 'Return':
       toggleTaskItemCompleted(index);
+
+    default:
+      console.log(event.key);
   }
 }
 

@@ -1,9 +1,7 @@
 # ForgetMeNot - A Persistent ToDo List
----
 ## MTECH Web Programming And Development Course (JavaScript Section)
 ### Version 2
 ###### Assignment 2.P.1
-
 ---
 
 ## Project Overview
@@ -11,12 +9,8 @@ Create a ToDo app which allows users to create multiple task lists, and edit, de
 *peruse the [Step-by-step guide](https://mtec.instructure.com/courses/794448/pages/2-dot-p-1-%7C-todo-app-step-by-step-guide?module_item_id=17368524)*
 
 ---
-
-## Current Work In Progress:
- - From 'Things I'd like to do'
- - [ ] ***Restructure JavaScipt using ES6 Modules***
-
-## Requirements:
+## Requirements Checklist:
+***(if italicied, optional)***
  - [x] User must be able to create multiple lists...
    - [x] of tasks.
  - [x] User must be able to view all tasks in a list.
@@ -25,6 +19,7 @@ Create a ToDo app which allows users to create multiple task lists, and edit, de
  - [x] User must be able to mark tasks as completed.
    - [x] Some state information for each task must be stored.
  - [x] User must be able to delete all completed tasks with one click.
+ - [ ] ***Restructure JavaScipt using ES6 Modules***
  - ***User must be able to edit tasks***
    - What does this mean? Able to ***change task name?***
    - How about ***reorder the list?***
