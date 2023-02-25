@@ -10,10 +10,10 @@ Create a ToDo app which allows users to create multiple task lists, and edit, de
 ---
 ## Requirements
 ***(if italicied, optional)***
- - [ ] ***Restructure JavaScipt using ES6 Modules***
- - User must be able to edit tasks
-   - What does this mean? Able to ***change task name?***
-   - How about ***reorder the list?***
+ - [ ] User must be able to edit tasks
+   - What does this mean? How about:
+   - [ ] User can ***reorder the list***
+   - [ ] User can ***change task name***
  - [ ] User must be able to search for specific tasks in the list.
    - one list at a time?
    - across all lists?
@@ -29,8 +29,8 @@ Create a ToDo app which allows users to create multiple task lists, and edit, de
 ---
 ## Things I'd like to do
  - [ ] Move completed tasks below incomplete tasks
- - [x] Clear local storage with ```localstorage.clear();```
  - [ ] ***Restructure JavaScipt using ES6 Modules***
+ - [x] Clear local storage with ```localstorage.clear();```
 ---
 ## Completed Requirements
 ***(if italicied, optional)***
