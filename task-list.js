@@ -173,6 +173,14 @@ function handleKeypressTaskItem(event) {
     case 'Return':
       toggleTaskItemCompleted(index);
 
+    case 'ArrowUp':
+      handleArrowKey(index, -1);
+      break;
+
+    case 'ArrowDown':
+      handleArrowKey(index, +1);
+      break;
+
     default:
       console.log(event.key);
   }
@@ -191,4 +199,24 @@ function deleteTaskItem(index) {
 function toggleTaskItemCompleted(index) {
   taskList[index].completed = !taskList[index].completed;
   renderPage(IS_DIRTY, index);
+}
+
+function handleArrowKey(index, requestedDelta) {
+  // Check for any invalid or no-op conditions.
+  if (taskList.length <= 1) return;
+  if (requestedDelta === 0) return;
+
+  const smallestValidIndex = 0;
+  const largestValidIndex = taskList.length - 1;
+  const newIndex = index + requestedDelta;
+  if ((newIndex < smallestValidIndex) || (newIndex > largestValidIndex)) return;
+
+  // Remove the item from the array.
+  task = taskList.splice(index, 1)[0];
+
+  // Add it back at the new position
+  taskList.splice(newIndex, 0, task);
+
+  // Render the modified page
+  renderPage(IS_DIRTY, newIndex);
 }
