@@ -9,7 +9,6 @@ Create a ToDo app which allows users to create multiple task lists, and edit, de
 
 ---
 ## Requirements
-***(if italicied, optional)***
  - [ ] User must be able to edit tasks
    - What does this mean? How about:
    - [ ] User can ***reorder the list***
