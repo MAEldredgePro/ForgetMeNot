@@ -129,8 +129,3 @@ function handleAddListKeypress(event) {
   console.log(elInputAddList.value);
   addNewList(elInputAddList.value);
 }
-
-// function handleListButtonClick(event) {
-//   renderListPage(event.target.id, event.target.innerHTML);
-//   // console.log(event);
-// }

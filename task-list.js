@@ -9,25 +9,26 @@ const IS_DIRTY = true;
 const NOT_DIRTY = false;
 
 // Global variables
-let taskList = null;
+let taskList;
 
 // Code called when the script loads - similar to other languages' main()
 const params = new Proxy(new URLSearchParams(window.location.search), {
   get: (searchParams, prop) => searchParams.get(prop),
 });
 
-const listId = params.id;
+const listIdStr = params.id;
 var loopCount = 0;
 
 loadTaskList();
 renderPage(NOT_DIRTY);
+
 
 //////////////////////////
 // Function definitions //
 //////////////////////////
 function loadTaskList() {
   // load the task list from local storage
-  taskList = JSON.parse(localStorage.getItem(listId));
+  taskList = JSON.parse(localStorage.getItem(listIdStr));
 
   // make sure we have at least an empty task list
   //  (local storage might have never been set and might have returned 'null').
@@ -38,7 +39,7 @@ function clearPage() {
   document.querySelector('body').innerHTML = '';
 }
 
-function renderPage(isDirty) {
+function renderPage(isDirty, idxOfTaskToGetFocus = -1) {
   // Clear the page.
   clearPage();
 
@@ -52,7 +53,7 @@ function renderPage(isDirty) {
   document.body.appendChild(document.createElement('br'));
 
   // Add the UI for the task list.
-  addUIToPage_TaskList();
+  addUIToPage_TaskList(idxOfTaskToGetFocus);
 
   // Save the task list if we are dirty.
   isDirty ? saveTaskList() : null;
@@ -73,13 +74,11 @@ function addUIToPage_ClearCompletedTasks() {
   elButton.innerHTML = CLEAR_COMPLETED_TASKS_PROMPT;
   document.body.appendChild(elButton);
 
-  // TODO:
-  // Add event listeners that make the button work.
-  // elButton.addEventListener('keypress', handleKeypressClearCompleted);
+  // Add event listeners for the ClearCompleted action on click
   elButton.addEventListener('click', handleClickClearCompleted);
 }
 
-function addUIToPage_TaskList() {
+function addUIToPage_TaskList(idxOfTaskToGetFocus) {
   // Add the tasks to the web page.
   taskList.forEach((task, index) => {
 
@@ -95,6 +94,11 @@ function addUIToPage_TaskList() {
 
     // add the task item to the page
     document.body.appendChild(elButton);
+    if (index === idxOfTaskToGetFocus) {
+      elButton.focus();
+    }
+
+    // q&d formatting
     document.body.appendChild(document.createElement('br'));
   });
 }
@@ -110,11 +114,11 @@ function saveTaskList() {
   // Save the task list so that it will come up the same if the app
   //  is shut down and re-loaded.
   if (taskList === null) {
-    localStorage.removeItem(listId);
+    localStorage.removeItem(listIdStr);
     return;
   }
 
-  localStorage.setItem(listId, JSON.stringify(taskList));
+  localStorage.setItem(listIdStr, JSON.stringify(taskList));
 }
 
 function removeAllCompletedTasks() {
@@ -153,7 +157,7 @@ function handleKeypressAddTask(event) {
 }
 
 function handleKeypressTaskItem(event) {
-  const index = event.target.id;
+  const index = Number(event.target.id);
 
   switch (event.key) {
     case 'Tab':
@@ -175,7 +179,8 @@ function handleKeypressTaskItem(event) {
 }
 
 function handleClickTaskItem(event) {
-  toggleTaskItemCompleted(event.target.id);
+  console.log(document.activeElement);
+  toggleTaskItemCompleted(Number(event.target.id));
 }
 
 function deleteTaskItem(index) {
@@ -185,5 +190,5 @@ function deleteTaskItem(index) {
 
 function toggleTaskItemCompleted(index) {
   taskList[index].completed = !taskList[index].completed;
-  renderPage(IS_DIRTY);
+  renderPage(IS_DIRTY, index);
 }
