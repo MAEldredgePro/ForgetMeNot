@@ -1,0 +1,9 @@
+Up/Down arrow to move a task up/down in the list
+
+Space or Enter to mark a task as completed
+
+Backspace or Delete to delete a single tasks
+
+Tab / Shift + Tab to navigate the list
+
+
