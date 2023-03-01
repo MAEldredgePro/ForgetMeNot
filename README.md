@@ -93,7 +93,7 @@ Each project requirement will be worth 2 points and will be graded as follows:
 - [x] 2 pts: Users can create any number of tasks in a list
 - [x] 2 pts: Users can mark a task as complete.
 - [x] 2 pts: Users can clear their completed tasks.
-        - [ ] 2 pts: Users can edit tasks.
+- [ ] 2 pts: Users can edit tasks.
 - [ ] 2 pts: Users can delete tasks and lists without needing to complete them first.
 - [ ] 2 pts: Use some basic styles to enhance the look of the page.
 - [ ] 2 pts: Use local storage to store all user data (list names, tasks in each list, etc)
