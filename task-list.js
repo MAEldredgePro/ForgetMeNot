@@ -8,8 +8,20 @@ const CLEAR_COMPLETED_TASKS_PROMPT = 'Clear completed tasks';
 const IS_DIRTY = true;
 const NOT_DIRTY = false;
 
+// Global data type definitions //
+class ActiveListSettings {
+  taskWithFocus;
+  isEditing;
+
+  constructor() {
+    this.taskWithFocus = -1;
+    this.isEditing = false;
+  }
+}
+
 // Global variables
 let taskList;
+let activeListSettings = new ActiveListSettings();
 
 // Code called when the script loads - similar to other languages' main()
 const params = new Proxy(new URLSearchParams(window.location.search), {
@@ -44,13 +56,10 @@ function renderPage(isDirty, idxOfTaskToGetFocus = -1) {
   clearPage();
 
   // Add the UI for adding a task.
-  addUIToPage_AddTask();
+  addUIToPage_CreateTaskInput();
 
   // Add the UI for clearing completed tasks.
-  addUIToPage_ClearCompletedTasks();
-
-  // Add a line break.
-  document.body.appendChild(document.createElement('br'));
+  addUIToPage_ClearCompletedTasksButton();
 
   // Add the UI for the task list.
   addUIToPage_TaskList(idxOfTaskToGetFocus);
@@ -59,7 +68,7 @@ function renderPage(isDirty, idxOfTaskToGetFocus = -1) {
   isDirty ? saveTaskList() : null;
 }
 
-function addUIToPage_AddTask() {
+function addUIToPage_CreateTaskInput() {
   // Create the 'Add Task' input element and add it to the web page.
   //  then add a keypress event handler to the input element that
   //  will handle the 'Enter' key, which creates and adds a new task.
@@ -68,7 +77,7 @@ function addUIToPage_AddTask() {
   elInput.focus();
 }
 
-function addUIToPage_ClearCompletedTasks() {
+function addUIToPage_ClearCompletedTasksButton() {
   // Create the 'Clear Completed Tasks' button
   elButton = document.createElement('button');
   elButton.innerHTML = CLEAR_COMPLETED_TASKS_PROMPT;
@@ -82,24 +91,27 @@ function addUIToPage_TaskList(idxOfTaskToGetFocus) {
   // Add the tasks to the web page.
   taskList.forEach((task, index) => {
 
-    // create the task
+    // q&d formatting
+    document.body.appendChild(document.createElement('br'));
+
+    // create the edit button and add it to the page
+    elButton = document.createElement('button');
+    elButton.innerHTML = '✎';
+    elButton.setAttribute('id', index);
+    elButton.addEventListener('click', handleClickEditTask);
+    document.body.appendChild(elButton);
+
+    // create the task button and add it to the page
     elButton = document.createElement('button');
     elButton.innerHTML = task.name;
     elButton.setAttribute('id', index);
     task.completed ? elButton.setAttribute('class', 'completed') : null;
-
     // add event listeners to the task item for user interaction
     elButton.addEventListener('keyup', handleKeypressTaskItem);
     elButton.addEventListener('click', handleClickTaskItem);
-
-    // add the task item to the page
+    // add the task item button to the page
     document.body.appendChild(elButton);
-    if (index === idxOfTaskToGetFocus) {
-      elButton.focus();
-    }
-
-    // q&d formatting
-    document.body.appendChild(document.createElement('br'));
+    (index === idxOfTaskToGetFocus) ? elButton.focus() : null;
   });
 }
 
@@ -110,42 +122,58 @@ function addInputElement(prompt) {
   return elInput;
 }
 
-function saveTaskList() {
-  // Save the task list so that it will come up the same if the app
-  //  is shut down and re-loaded.
-  if (taskList === null) {
-    localStorage.removeItem(listIdStr);
-    return;
-  }
+function addTaskItem(taskItemName) {
+  // Add the new task item to the list of tasks.
+  const newTaskItem = {
+    "name": taskItemName,
+    "completed": false,
+  };
 
-  localStorage.setItem(listIdStr, JSON.stringify(taskList));
-}
-
-function removeAllCompletedTasks() {
-  // Copy the contents of the live task list then empty the live task list.
-  let tasks = taskList.splice(0, taskList.length);
-
-  // Iterate all the saved tasks and push the incomplete ones back on to the
-  //  live task list.
-  tasks.forEach(function (task) {
-    !task.completed ? taskList.push(task) : null;
-  });
+  taskList.push(newTaskItem);
 
   // Re-render the HTML
   renderPage(IS_DIRTY);
+}
+
+function deleteTaskItem(index) {
+  taskList.splice(index, 1);
+  renderPage(IS_DIRTY);
+}
+
+function handleArrowKey(index, requestedDelta) {
+  // Check for any invalid or no-op conditions.
+  if (taskList.length <= 1) return;
+  if (requestedDelta === 0) return;
+
+  const smallestValidIndex = 0;
+  const largestValidIndex = taskList.length - 1;
+  const newIndex = index + requestedDelta;
+  if ((newIndex < smallestValidIndex) || (newIndex > largestValidIndex)) return;
+
+  // Remove the item from the array.
+  task = taskList.splice(index, 1)[0];
+
+  // Add it back at the new position
+  taskList.splice(newIndex, 0, task);
+
+  // Render the modified page
+  renderPage(IS_DIRTY, newIndex);
 }
 
 function handleClickClearCompleted() {
   removeAllCompletedTasks();
 }
 
-function addTaskItem(taskItemName) {
-  // Add the new task item to the list of tasks.
-  const newTaskItem = { "name": taskItemName, "completed": false };
-  taskList.push(newTaskItem);
+function handleClickTaskItem(event) {
+  console.log(document.activeElement);
+  toggleTaskItemCompleted(Number(event.target.id));
+}
 
-  // Re-render the HTML
-  renderPage(IS_DIRTY);
+function handleClickEditTask(event) {
+  const index = Number(event.target.id);
+  // taskList[index].
+  // console.log(event);
+  // console.log('Editing task ' + event.target.id);
 }
 
 function handleKeypressAddTask(event) {
@@ -186,37 +214,32 @@ function handleKeypressTaskItem(event) {
   }
 }
 
-function handleClickTaskItem(event) {
-  console.log(document.activeElement);
-  toggleTaskItemCompleted(Number(event.target.id));
+function removeAllCompletedTasks() {
+  // Copy the contents of the live task list then empty the live task list.
+  let tasks = taskList.splice(0, taskList.length);
+
+  // Iterate all the saved tasks and push the incomplete ones back on to the
+  //  live task list.
+  tasks.forEach(function (task) {
+    !task.completed ? taskList.push(task) : null;
+  });
+
+  // Re-render the HTML
+  renderPage(IS_DIRTY);
 }
 
-function deleteTaskItem(index) {
-  taskList.splice(index, 1);
-  renderPage(IS_DIRTY);
+function saveTaskList() {
+  // Save the task list so that it will come up the same if the app
+  //  is shut down and re-loaded.
+  if (taskList === null) {
+    localStorage.removeItem(listIdStr);
+    return;
+  }
+
+  localStorage.setItem(listIdStr, JSON.stringify(taskList));
 }
 
 function toggleTaskItemCompleted(index) {
   taskList[index].completed = !taskList[index].completed;
   renderPage(IS_DIRTY, index);
-}
-
-function handleArrowKey(index, requestedDelta) {
-  // Check for any invalid or no-op conditions.
-  if (taskList.length <= 1) return;
-  if (requestedDelta === 0) return;
-
-  const smallestValidIndex = 0;
-  const largestValidIndex = taskList.length - 1;
-  const newIndex = index + requestedDelta;
-  if ((newIndex < smallestValidIndex) || (newIndex > largestValidIndex)) return;
-
-  // Remove the item from the array.
-  task = taskList.splice(index, 1)[0];
-
-  // Add it back at the new position
-  taskList.splice(newIndex, 0, task);
-
-  // Render the modified page
-  renderPage(IS_DIRTY, newIndex);
 }
